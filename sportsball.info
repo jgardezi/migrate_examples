@@ -1,0 +1,8 @@
+name = Sportsball
+description = Custom migration for baseball data
+core = 7.x
+
+dependencies[] = migrate
+
+files[] = includes/base.inc
+files[] = includes/players.inc
