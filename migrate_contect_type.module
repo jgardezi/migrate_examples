@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Migrate Contect Type feature.
+ */
+
+include_once 'migrate_contect_type.features.inc';
