@@ -16,6 +16,10 @@ function sportsball_migrate_api() {
         'class_name' => 'SportsBallPlayerMigration',
         'group_name' => 'baseball',
         ),
+      'SportsBallTeams' => array(
+        'class_name' => 'SportsBallTeamMigration',
+        'group_name' => 'baseball',
+      ),
       ),
     );
 }

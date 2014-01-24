@@ -16,6 +16,7 @@ class SportsBallPlayerMigration extends SportsBallMigration {
       ->fields('m', array('playerID', 'nameFirst', 'nameLast', 'birthDay', 'birthMonth', 'birthYear', 'deathDay', 'deathMonth', 'deathYear',
         'nameNick', 'nameNote', 'weight', 'height', 'bats', 'throws'))
       ->isNotNull('m.playerID');
+
     $this->source = new MigrateSourceSQL($query);
 
     // create a destination object
@@ -36,7 +37,7 @@ class SportsBallPlayerMigration extends SportsBallMigration {
         MigrateDestinationNode::getKeySchema()
       );
 
-    // individual field mapping
+    // individual or additional field mapping
     $this->addFieldMapping('title', 'nameFirst');
     $this->addFieldMapping('field_player_nick_name', 'nameNick');
     $this->addFieldMapping('field_player_height', 'height');
@@ -45,7 +46,8 @@ class SportsBallPlayerMigration extends SportsBallMigration {
     $this->addFieldMapping('field_player_bats', 'bats')
           ->description(t('What about batters who can hit switch?'))
           ->issueGroup(t('Questions'))
-          ->issuePriority(MigrateFieldMapping::ISSUE_PRIORITY_BLOCKER);
+          ->issuePriority(MigrateFieldMapping::ISSUE_PRIORITY_BLOCKER)
+          ->issueNumber(1);
 
     $this->addFieldMapping('field_player_throws', 'throws');
 
@@ -62,15 +64,18 @@ class SportsBallPlayerMigration extends SportsBallMigration {
           ->defaultValue('Imported by player migration.')
           ->description('We are prepending data to any field that had data.');
 
+    // Date fields.
     $this->addFieldMapping('field_player_birthday', 'birthday');
     $this->addFieldMapping('field_player_death', 'death');
+
+    $this->addFieldMapping('created')
+      ->issueGroup(t('DNM'));
 
     // drupal default values will be inserted field not in use, thought about these fields but considering to use it
     // just nice pratice. team work
     $this->addUnmigratedDestinations(array(
       'field_player_notes:language',
       'uid',
-      'created',
       'changed',
       'status',
       'promote',
