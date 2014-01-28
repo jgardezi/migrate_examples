@@ -34,4 +34,18 @@ class SportsBallTeamMigration extends SportsBallMigration {
     $this->addFieldMapping('title', 'name');
     $this->addFieldMapping('field_team_park', 'park');
   }
+
+  protected function createStub(Migration $migration, array $source_id) {
+    $node = new stdClass();
+    $node->title = t('Stub for team @id', array('@id' => $source_id[0]));
+    $node->type = 'team';
+    node_save($node);
+    if (isset($node->nid)) {
+      return array($node->nid);
+    }
+    else {
+      return FALSE;
+    }
+  }
+
 }

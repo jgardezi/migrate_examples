@@ -11,8 +11,8 @@ class SportsBallPlayerMigration extends SportsBallMigration {
 
     $this->description = t('Import player data from the Lahman database.');
 
-    //dependencies
-    $this->dependencies = array('SportsBallTeams');
+    //dependencies comment it out for stubs
+    //$this->dependencies = array('SportsBallTeams');
 
     // create a source object
     // use mysql special function Group_conact() so that we don't have to run query
