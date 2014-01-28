@@ -5,7 +5,7 @@ abstract class SportsBallMigration extends Migration {
   public function __construct($arguments) {
     parent::__construct($arguments);
 
-    $this->issuePattern = 'https://github.com/DrupalizeMe/sportsball/issues/:id:';
+    $this->issuePattern = 'https://github.com/jgardezi/migrate_examples/issues/:id:';
 
     $this->team = array(
       new MigrateTeamMember('Javed Gardezi', 'javed@example.com',
