@@ -15,6 +15,7 @@ class SportsBallPlayerMigration extends SportsBallMigration {
     $this->dependencies = array('SportsBallTeams');
 
     // create a source object
+    // use mysql special function Group_conact() so that we don't have to run query
     $query = $this->getConnection()->select('master', 'm')
       ->fields('m', array('playerID', 'nameFirst', 'nameLast', 'birthDay', 'birthMonth', 'birthYear', 'deathDay', 'deathMonth', 'deathYear', 'nameNick', 'nameNote', 'weight', 'height', 'bats', 'throws'))
       ->isNotNull('m.playerID');
@@ -23,6 +24,8 @@ class SportsBallPlayerMigration extends SportsBallMigration {
       ->groupBy('m.playerID')
       ->orderBy('a.yearID', 'DESC')
       ->orderBy('m.playerID');
+
+    $query->addExpression('GROUP_CONCAT(a.teamID)', 'teams');
 
     $this->source = new MigrateSourceSQL($query);
 
@@ -78,7 +81,8 @@ class SportsBallPlayerMigration extends SportsBallMigration {
     $this->addFieldMapping('field_player_death', 'death');
 
     //Field mapping for the join or entity reference
-    $this->addFieldMapping('field_player_teams', 'teamID')
+    $this->addFieldMapping('field_player_teams', 'teams')
+      ->separator(',')
       ->sourceMigration(array('SportsBallTeams'));
 
     //showing warning error messages.
@@ -113,6 +117,21 @@ class SportsBallPlayerMigration extends SportsBallMigration {
     if (isset($row->deathYear)) {
       $row->death = $row->deathYear . '/' . $row->deathMonth . '/' . $row->deathDay;
     }
+
+    //Complex way and it will run for every single query.
+    //There has to be better way.
+    /*$teams = array();
+    $results = $this->getConnection()->select('appearances', 'a')
+        ->fields('a', array('teamID'))
+        ->condition('playerID', $row->playerID)
+        ->execute();
+
+    foreach ($results as $res) {
+      $teams[] = $res->teamID;
+    }
+
+    $row->teamID = count($teams) ? $teams : NULL;*/
+    //drush_print_r($row);
 
   }
 
