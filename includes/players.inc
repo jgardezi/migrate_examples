@@ -111,10 +111,10 @@ class SportsBallPlayerMigration extends SportsBallMigration {
   function prepareRow($row) {
     $row->nameFirst = $row->nameFirst . ' ' . $row->nameLast;
 
-    if (isset($row->birthYear)) {
+    if (isset($row->birthYear) && isset($row->birthMonth) && isset($row->birthDay) ) {
       $row->birthday = $row->birthYear . '/' . $row->birthMonth . '/' . $row->birthDay;
     }
-    if (isset($row->deathYear)) {
+    if (isset($row->deathYear) && isset($row->deathMonth) && isset($row->deathDay)) {
       $row->death = $row->deathYear . '/' . $row->deathMonth . '/' . $row->deathDay;
     }
 
