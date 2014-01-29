@@ -35,6 +35,13 @@ class SportsBallTeamMigration extends SportsBallMigration {
     $this->addFieldMapping('field_team_park', 'park');
   }
 
+/**
+ * Players migration executes it will only create stub team ids for mapping purpose
+ * and when teams migaration will execute it will update existing stubs
+ * @param  Migration $migration this miragtion
+ * @param  array     $source_id team ids
+ * @return node               team id
+ */
   protected function createStub(Migration $migration, array $source_id) {
     $node = new stdClass();
     $node->title = t('Stub for team @id', array('@id' => $source_id[0]));

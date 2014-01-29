@@ -12,4 +12,5 @@
 <ul>
   <li>Migrate Module (2.6 Release Candidate 1): https://drupal.org/project/migrate</li>
   <li>Migrate Extras Module: https://drupal.org/project/migrate_extras</li>
+  <li>Migrate Source Classes: https://drupal.org/node/1006986</li>
 </ul>
